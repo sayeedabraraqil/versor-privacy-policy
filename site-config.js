@@ -6,5 +6,5 @@
 window.VERSOR_SITE_CONFIG = Object.freeze({
   appName: "Versor",
   packageName: "com.versor",
-  privacyContactEmail: ""
+  privacyContactEmail: "sayeedabraraqil@gmail.com"
 });
