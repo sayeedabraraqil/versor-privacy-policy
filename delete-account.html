@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="How to request deletion of a Versor account and associated user data.">
+  <title>Versor Account &amp; Data Deletion</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="site-config.js"></script>
+  <script src="site.js" defer></script>
+</head>
+<body>
+  <header class="site-header"><div class="header-inner">
+    <a class="brand" href="index.html"><span class="brand-mark">V</span><span>Versor</span></a>
+    <nav class="nav" aria-label="Legal navigation"><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms</a><a href="delete-account.html" aria-current="page">Delete Account</a></nav>
+  </div></header>
+  <main><article class="paper">
+    <div class="eyebrow">Account controls</div>
+    <h1>Account &amp; Data Deletion</h1>
+    <p class="meta">Versor · Android package <code>com.versor</code> · Last updated: 17 November 2026</p>
+    <p class="lead">You can delete your Versor account and request deletion of the associated cloud workspace. Account deletion is permanent and removes access to your Versor account.</p>
+
+    <h2>Option 1 — Delete your account inside Versor</h2>
+    <ol>
+      <li>Open Versor and sign in to the account you want to delete.</li>
+      <li>Open your profile from the Home screen and go to <strong>Student Profile</strong>.</li>
+      <li>Select <strong>Delete Account</strong> and read the confirmation information.</li>
+      <li>Complete the requested recent sign-in verification. For security, the deletion service rejects requests when the last authentication is older than its recent-authentication window.</li>
+      <li>Confirm permanent deletion. The app submits the authenticated request to Versor's account-lifecycle service.</li>
+    </ol>
+    <div class="callout"><strong>Do not send your password or authentication token.</strong> Versor will never ask you to include your password, Firebase ID token, Google access token, purchase token, or service-account credentials in a deletion request.</div>
+
+    <h2>Option 2 — Request deletion without access to the app</h2>
+    <p>If you cannot install or sign in to Versor, you can initiate a request from this page using the email address registered to your Versor account. We may ask for reasonable proof that you control the account before processing the request. Do not include passwords, identity documents, payment-card details, or authentication tokens in the email.</p>
+
+    <div class="callout warning" data-contact-required>
+      <strong>External request contact is not configured.</strong> The site owner must set a real, monitored privacy/support email in <code>site-config.js</code>. This external deletion-request route is not ready to publish until that is done.
+    </div>
+    <div data-contact-ready class="hidden">
+      <form id="deletionRequestForm">
+        <div class="form-grid">
+          <div class="field">
+            <label for="registeredEmail">Email address registered to your Versor account</label>
+            <input id="registeredEmail" name="registeredEmail" type="email" autocomplete="email" required maxlength="254">
+          </div>
+          <div class="field">
+            <label for="signInMethod">Sign-in method</label>
+            <select id="signInMethod" name="signInMethod" required>
+              <option value="Google sign-in">Google sign-in</option>
+              <option value="Email and password">Email and password</option>
+              <option value="Not sure">Not sure</option>
+            </select>
+          </div>
+          <div class="field full">
+            <label for="requestDetails">Additional details (optional)</label>
+            <textarea id="requestDetails" name="requestDetails" maxlength="1000"></textarea>
+          </div>
+        </div>
+        <button type="submit">Prepare account deletion email</button>
+        <p id="formStatus" class="small" role="status" aria-live="polite">This opens your email application with a prepared request. You must review and send the email to submit it.</p>
+      </form>
+      <p class="small">Privacy contact: <a data-contact-email href="#">contact Versor</a>.</p>
+    </div>
+
+    <h2>What happens when deletion completes</h2>
+    <ul>
+      <li>The Firebase Authentication account is deleted.</li>
+      <li>The account's Firestore user document and nested academic workspace data are recursively deleted.</li>
+      <li>The Appwrite shadow user and Appwrite sessions are removed, and the academic account mapping is marked deleted.</li>
+      <li>The current device's Versor local account cache, local profile/avatar data, class-completion state, drafts, scanner cache, and scheduled reminders are cleared by the app's deletion cleanup.</li>
+    </ul>
+
+    <h2>Limited records that may be retained</h2>
+    <p>To prevent stale credentials from recreating a deleted account, Appwrite retains a restricted security tombstone with internal Firebase/Appwrite account identifiers, a deleted status, and a deletion timestamp. Firestore retains a hashed account reference and deletion workflow status/timestamps to support idempotent processing and recovery. Where purchase-token records exist, the backend clears the Firebase UID, obfuscated account identifier, and encrypted purchase token; a hashed purchase-token reference and limited subscription/audit metadata may remain for purchase replay prevention, fraud/abuse prevention, and chargeback reconciliation. The current implementation does not define a fixed automatic expiry for these limited records. More detail is in the <a href="privacy.html">Privacy Policy</a>.</p>
+
+    <div class="callout warning">
+      <strong>Google Play subscriptions:</strong> deleting your Versor account does not automatically cancel a recurring Google Play subscription. To prevent future renewal, cancel the subscription separately through <a href="https://play.google.com/store/account/subscriptions?package=com.versor" rel="noopener noreferrer">Google Play subscriptions</a>.
+    </div>
+    <p class="small"><a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Service</a> · <a href="index.html">Versor legal home</a></p>
+  </article></main>
+  <footer class="site-footer"><div class="footer-inner"><span>Versor · <span id="currentYear"></span></span><span class="footer-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></span></div></footer>
+</body>
+</html>

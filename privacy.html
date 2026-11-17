@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Versor Privacy Policy: how the Versor Android app handles account, academic, document, billing, advertising, and device data.">
+  <title>Versor Privacy Policy</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="site-config.js"></script>
+  <script src="site.js" defer></script>
+</head>
+<body>
+  <header class="site-header"><div class="header-inner">
+    <a class="brand" href="index.html"><span class="brand-mark">V</span><span>Versor</span></a>
+    <nav class="nav" aria-label="Legal navigation"><a href="privacy.html" aria-current="page">Privacy Policy</a><a href="terms.html">Terms</a><a href="delete-account.html">Delete Account</a></nav>
+  </div></header>
+  <main><article class="paper">
+    <div class="eyebrow">Legal · Privacy</div>
+    <h1>Privacy Policy</h1>
+    <p class="meta">Versor · Android package <code>com.versor</code> · Last updated: 17 November 2026</p>
+    <p class="lead">This Privacy Policy explains how Versor handles information when you use the Versor Android application. It covers information you provide, information processed by the services that power the app, local device data, advertising, subscriptions, and account deletion.</p>
+
+    <div class="callout warning" data-contact-required>
+      <strong>Before publication:</strong> configure a real, monitored privacy contact email in <code>site-config.js</code>. Google Play requires a privacy point of contact or a way to submit privacy questions. Do not submit this policy while this notice is visible.
+    </div>
+
+    <h2>1. Information Versor processes</h2>
+    <h3>1.1 Account and sign-in information</h3>
+    <p>Versor supports email-and-password registration/sign-in and Google sign-in through Android Credential Manager and Firebase Authentication. Depending on the sign-in method, Firebase Authentication processes your email address, Firebase user identifier, display name, profile image URL, sign-in provider, email-verification state, and authentication/session information. Firebase handles the authentication credentials; Versor does not receive or store your account password as ordinary application data.</p>
+    <p>Versor keeps a local profile cache containing your Firebase user identifier, display name, email address, profile image URL, a locally cached profile image when available, and a local update timestamp. This cache is stored in app-private Android storage and is not part of the Firestore academic workspace.</p>
+
+    <h3>1.2 Student profile and academic workspace</h3>
+    <p>You may enter or create information such as your name, student ID, university, department, batch, semester, section, notification preferences, and other profile settings. You may also create class routines and events containing course codes and names, titles, dates, days, start/end times, room locations, instructor names, syllabus notes, reminders, completion status, and holiday/semester settings.</p>
+    <p>Versor also stores user-created university or institutional links, including link titles, categories, URLs, institution names, and pinned status. In-app notification records may contain notification titles and bodies, categories, priority, source/target references, navigation routes, scheduled/delivered/read timestamps, and related metadata.</p>
+    <p>When cloud sync is enabled, these academic workspace records are stored in Cloud Firestore in an account-scoped namespace associated with your Firebase user. Access rules are intended to restrict each user to their own account data.</p>
+
+    <h3>1.3 Academic documents, presentations, and scanner content</h3>
+    <p>When you create or save academic documents, Versor may process and sync information you enter, including document type, title, course code/title, template style, student name and ID, department, university, batch/semester/section, instructor name/designation, submission date, document text, page count, and related document metadata. Saved document text and metadata are part of your cloud-synced academic workspace.</p>
+    <p>The document scanner uses the device camera through CameraX and Google ML Kit text recognition. Image capture, cropping, image adjustments, and OCR text extraction are performed on the device. The scanner workflow does not upload the captured image itself to Versor's Firebase or Appwrite backend. If you choose to save extracted text or document details as an academic document, the saved text and metadata are synced to Firestore as described above.</p>
+    <p>Presentation slide images, unfinished presentation drafts, class-completion ticks, alarm ledgers, and exported PDFs are stored locally in app-private device storage or preferences. Presentation slide text/structure may sync as academic document data, but raw presentation image files remain on the device. If you export or share a PDF or image using another Android app, the receiving app or destination handles that copy under its own privacy practices.</p>
+
+    <h3>1.4 Authentication bridge and Appwrite account mapping</h3>
+    <p>Versor uses Firebase Authentication as its canonical sign-in system and Appwrite Cloud for the academic identity/session bridge. After Firebase sign-in, the app sends a Firebase ID token to the Appwrite <code>academic-gateway</code> over HTTPS so the server can verify the identity and establish an Appwrite session. Appwrite maintains a shadow user/session and an <code>academic_accounts</code> mapping containing internal Firebase and Appwrite user identifiers, account state, platform role, and relevant timestamps. This mapping supports session validation and account restrictions; it is not a second user-created academic document store.</p>
+
+    <h3>1.5 Subscription and purchase information</h3>
+    <p>Versor offers optional monthly and annual subscriptions through Google Play Billing. Google Play processes the transaction and payment. Versor's app and backend process purchase-related information needed to verify a subscription and provide the correct entitlement, such as the purchase token, product and base-plan identifiers, subscription state, expiry/renewal information, acknowledgement state, and an obfuscated account reference.</p>
+    <p>The purchase token is sent to the Versor billing backend for server-side verification with the Google Play Developer API. The backend stores a SHA-256 token hash and encrypts the purchase token using AES-256-GCM for verification/reconciliation. The user's premium entitlement state is stored in the user's Firestore entitlement record. Versor does not receive or store your full payment-card or bank-account details; those are handled by Google Play and its payment providers.</p>
+
+    <h3>1.6 Advertising and consent information</h3>
+    <p>Where ads are enabled, Versor uses Google Mobile Ads for native advertising and Google's User Messaging Platform (UMP) to request and manage consent where required. Depending on your region, consent choices, device settings, and Google's SDK behavior, these services may process advertising/device identifiers, IP address (which may be used to infer approximate location), ad requests, ad impressions and clicks, app interactions related to ads, and diagnostics or fraud-prevention signals. Google processes this information under its own terms and privacy documentation.</p>
+    <p>Versor uses UMP consent checks before requesting ads where required and provides an in-app Ad Privacy Preferences control when Google's consent status requires it. Ads are disabled in the app configuration when ads are not enabled and are suppressed for Premium accounts by the app's entitlement/ad configuration. Versor does not send your student ID, routines, saved document text, scanned images, or academic profile fields to AdMob for ad targeting.</p>
+
+    <h3>1.7 Device permissions and locally processed information</h3>
+    <p>The Android application requests internet/network access, camera access for document scanning, notification permission for reminders/alerts, and exact-alarm scheduling capability for time-sensitive reminders. Camera content is used for the scanner features described above. Notifications and scheduled alarms are used to remind you about classes, class tests, exams, and other academic events. Versor's Android manifest does not request contacts, microphone, or device-location permissions.</p>
+
+    <h2>2. Where information is stored and who processes it</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Service / provider</th><th>Role in Versor</th><th>Information involved</th></tr></thead>
+      <tbody>
+        <tr><td>Google Firebase Authentication</td><td>Account registration, sign-in, token issuance, reauthentication, and account deletion</td><td>Account identifiers, email, profile fields supplied by the sign-in provider, provider/session information</td></tr>
+        <tr><td>Google Cloud Firestore</td><td>Cloud sync for user academic workspace and entitlement records</td><td>Student profile, routines, holidays, semester settings, saved documents/text, links, notification records, premium entitlement state</td></tr>
+        <tr><td>Appwrite Cloud</td><td>Academic identity bridge, Appwrite shadow user/session, account-state mapping, billing gateway, and account-lifecycle functions</td><td>Internal account identifiers, session/account state, and server-side requests needed for the features described in this policy</td></tr>
+        <tr><td>Google Play Billing and Google Play Developer API</td><td>Subscription purchase, payment processing, verification, acknowledgement, renewal/cancellation status</td><td>Purchase tokens and subscription/product/entitlement information; payment details are handled by Google Play/payment providers</td></tr>
+        <tr><td>Google Mobile Ads and UMP</td><td>Ad delivery and consent management where ads are enabled</td><td>Advertising/device identifiers, IP-derived approximate location, ad interaction information, consent signals, diagnostics/fraud signals as described above</td></tr>
+        <tr><td>Google ML Kit Text Recognition</td><td>On-device OCR for scanned documents</td><td>Image frames and text are processed on the device in the scanner workflow</td></tr>
+      </tbody>
+    </table></div>
+    <p>Versor does not sell your academic workspace content. Versor does not provide your student profile, routines, saved document text, or scanned images to advertising partners for targeting. Service providers process information to provide the functions described in this policy, subject to their own terms and privacy practices. When you open a university or other external website through a link, that website's operator handles your activity under its own policy.</p>
+    <p>Versor's current Android dependency/configuration does not include a separate Firebase Analytics or Firebase Crashlytics integration. The Google advertising SDK may nevertheless process its own ad-related diagnostics and interaction signals as described above.</p>
+
+    <h2>3. Local storage, cloud sync, and backups</h2>
+    <p>Some information is stored only on your device, including cached profile information and avatar files, class-completion state, alarm ledgers, presentation drafts and media, temporary scan files, and exported PDFs. Versor's Android backup and device-transfer rules exclude the app's local DataStore, profile avatars, presentation media, documents, and per-user SharedPreferences from Android cloud backup/device transfer. Cloud-synced academic records are restored by signing in to the same Versor account.</p>
+
+    <h2>4. How information is used</h2>
+    <ul>
+      <li>To create and secure your account, authenticate sign-ins, and maintain sessions.</li>
+      <li>To store and synchronize your academic profile, routines, holidays, semester settings, links, notifications, and saved documents.</li>
+      <li>To scan documents and extract text on your device, and to generate/export academic PDFs and presentations.</li>
+      <li>To schedule and deliver local class, test, exam, and other reminders when you enable them.</li>
+      <li>To verify Google Play purchases, maintain Premium entitlements, handle renewals/cancellations/refunds, and prevent purchase-token reuse or account hijacking.</li>
+      <li>To deliver ads where enabled, manage legally required consent choices, maintain service security, and diagnose service failures.</li>
+    </ul>
+
+    <h2>5. Security</h2>
+    <p>Versor uses Firebase Authentication and server-side Firebase token verification for account operations. Appwrite gateway requests and backend communication use HTTPS. Firestore security rules scope user workspace access to the authenticated user. Privileged service-account credentials and Appwrite server secrets are kept on backend infrastructure rather than in the Android application. Billing purchase tokens are encrypted by the billing backend before storage, and token hashes are used for lookup/reconciliation.</p>
+    <p>No method of electronic storage or transmission is completely secure. You should protect access to your device and account, use a unique password where applicable, and never send your password, Firebase ID token, purchase token, or other authentication secret to support.</p>
+
+    <h2>6. Retention and account/data deletion</h2>
+    <p>You can request deletion from inside Versor by opening Student Profile and choosing <strong>Delete Account</strong>. The app requires recent reauthentication before the backend will process the request. You can also initiate an external deletion request from the <a href="delete-account.html">Account &amp; Data Deletion page</a>.</p>
+    <p>When a valid deletion completes, the workflow deletes the Firebase Authentication account, the user's Firestore <code>users/{uid}</code> document and nested user workspace data, the Appwrite shadow user and sessions, and the app's locally cached account data on the device processing the deletion. The in-app deletion process is designed to stop account access and remove the associated user workspace rather than merely deactivate the account.</p>
+    <p><strong>Limited security and billing records may remain:</strong></p>
+    <ul>
+      <li><strong>Appwrite security tombstone:</strong> the <code>academic_accounts</code> table retains a restricted account-mapping record containing the internal Firebase UID, Appwrite user ID, deleted account state, and deletion timestamp. It is retained to prevent stale credentials or cached tokens from recreating access to a deleted account.</li>
+      <li><strong>Deletion audit state:</strong> Firestore retains a SHA-256 hash of the Firebase UID with deletion status, step/timestamp information, and limited retry/audit metadata so the backend can safely resume partial deletion and prevent duplicate processing. The raw Firebase UID is not stored in this deletion-state document.</li>
+      <li><strong>Billing audit record:</strong> when billing-token records exist, the backend clears the Firebase UID, obfuscated account identifier, and encrypted purchase token. A hashed purchase-token reference and limited subscription/audit metadata (such as product/base-plan/status/expiry and deletion/audit timestamps) may remain for purchase replay prevention, fraud/abuse prevention, and chargeback reconciliation.</li>
+    </ul>
+    <p>The current deletion implementation does not define a fixed automatic expiry for these security tombstones and billing/deletion audit records. They are retained for the limited security, reconciliation, and audit purposes described above. Google Play may independently retain transaction and payment records under Google's policies. Deleting your Versor account does not itself cancel a recurring Google Play subscription; cancel it separately through <a href="https://play.google.com/store/account/subscriptions?package=com.versor" rel="noopener noreferrer">Google Play subscriptions</a>.</p>
+    <p>Local files that you exported, copied, or shared outside Versor are outside Versor's control and must be deleted from those destinations separately. Local files on another device that is offline at the time of deletion may remain on that device until the app next processes the signed-out/deleted account state or its local data is cleared.</p>
+
+    <h2>7. Children's privacy</h2>
+    <p>Versor is an academic productivity app designed for university students. It is not designed as a child-directed service. If you believe a child has provided personal information to Versor inappropriately, contact the privacy address below.</p>
+
+    <h2>8. International processing and third-party policies</h2>
+    <p>Versor uses Google services and Appwrite Cloud infrastructure. Your information may be processed in the countries or regions where those providers operate and where the project services are configured. Provider privacy information is available from <a href="https://policies.google.com/privacy" rel="noopener noreferrer">Google Privacy Policy</a> and <a href="https://appwrite.io/privacy" rel="noopener noreferrer">Appwrite Privacy Policy</a>.</p>
+
+    <h2>9. Changes to this policy</h2>
+    <p>We may update this policy when app features, service providers, or legal requirements change. The “Last updated” date at the top will be revised when a new version is published. Material changes may also be communicated through the app where appropriate.</p>
+
+    <h2>10. Privacy contact</h2>
+    <p>For privacy questions, access/correction requests, or help with account deletion, contact: <a data-contact-email href="#">privacy contact</a>.</p>
+    <div class="callout warning" data-contact-required><strong>Publication setup required:</strong> the site owner must configure a real, monitored privacy contact email in <code>site-config.js</code>. This page is not ready for Google Play submission until that contact works.</div>
+    <hr>
+    <p class="small"><a href="terms.html">Terms of Service</a> · <a href="delete-account.html">Account &amp; Data Deletion</a> · <a href="index.html">Versor legal home</a></p>
+  </article></main>
+  <footer class="site-footer"><div class="footer-inner"><span>Versor · <span id="currentYear"></span></span><span class="footer-links"><a href="terms.html">Terms</a><a href="delete-account.html">Delete Account</a></span></div></footer>
+</body>
+</html>
